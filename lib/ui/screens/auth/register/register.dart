@@ -20,9 +20,9 @@ class RegisterScreen extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.center,
-            height: 250,
+            height: 200,
             width: double.maxFinite,
-            child: Text('Firebase Auth'),
+            child: Text('Firebase Register'),
           ),
           Expanded(
             child: Container(
@@ -62,6 +62,20 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 30),
+                  // CustomTextField(
+                  //   title: 'Name',
+                  //   controller: passwordController,
+                  //   isPassword: false,
+                  //   icon: Icons.person_outline,
+                  // ),
+                  // SizedBox(height: 10),
+                  // CustomTextField(
+                  //   title: 'Phone Number',
+                  //   controller: passwordController,
+                  //   isPassword: false,
+                  //   icon: Icons.phone_outlined,
+                  // ),
+                  // SizedBox(height: 10),
                   CustomTextField(
                     title: 'EMAIL',
                     isPassword: false,
@@ -94,37 +108,30 @@ class RegisterScreen extends StatelessWidget {
                     },
                     title: 'Sign Up',
                   ),
-                  SizedBox(height: 20),
-                  Center(
-                    child: Text(
-                      'Forgot password?',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 50),
+                  SizedBox(height: 30),
                   GestureDetector(
                     onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(
                       LoginScreen.route,
                       (route) => false,
                     ),
-                    child: Container(
-                      height: 56,
-                      alignment: Alignment.center,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 0.7, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'Log In',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Already have an account? ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
+                        Text(
+                          'Sign In',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.amber,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

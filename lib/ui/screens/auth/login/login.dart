@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:authentication/core/services/firebase_auth.dart';
+import 'package:authentication/ui/screens/auth/login/widgets/social_signin.dart';
 import 'package:authentication/ui/screens/auth/register/register.dart';
 import 'package:authentication/ui/screens/home/home.dart';
 import 'package:authentication/ui/screens/widgets/custom_button.dart';
@@ -24,7 +23,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             Container(
               alignment: Alignment.center,
-              height: 250,
+              height: 200,
               width: double.maxFinite,
               child: Text('Firebase Auth'),
             ),
@@ -133,8 +132,8 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () async {
+                      SocialSignIn(
+                        function: () async {
                           final bool response = await AuthRepository().signInWithGoogle();
                           if (response) {
                             Navigator.of(context).pushNamedAndRemoveUntil(
@@ -146,14 +145,11 @@ class LoginScreen extends StatelessWidget {
                             return;
                           }
                         },
-                        child: Image.asset(
-                          'assets/png/google.png',
-                          height: 40,
-                        ),
+                        image: 'google',
                       ),
                       SizedBox(width: 40),
-                      GestureDetector(
-                        onTap: () async {
+                      SocialSignIn(
+                        function: () async {
                           final bool response = await AuthRepository().signInWithFacebook();
                           if (response) {
                             Navigator.of(context).pushNamedAndRemoveUntil(
@@ -165,10 +161,23 @@ class LoginScreen extends StatelessWidget {
                             return;
                           }
                         },
-                        child: Image.asset(
-                          'assets/png/facebook.png',
-                          height: 40,
-                        ),
+                        image: 'facebook',
+                      ),
+                      SizedBox(width: 40),
+                      SocialSignIn(
+                        function: () async {
+                          final bool response = await AuthRepository().signInWithTwitter();
+                          if (response) {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              HomeScreen.route,
+                              (route) => false,
+                            );
+                            return;
+                          } else {
+                            return;
+                          }
+                        },
+                        image: 'twitter',
                       ),
                     ],
                   ),
