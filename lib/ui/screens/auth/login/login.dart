@@ -1,3 +1,5 @@
+import 'package:authentication/controllers/auth_controller.dart';
+import 'package:authentication/controllers/toggle_controller.dart';
 import 'package:authentication/core/services/firebase_auth.dart';
 import 'package:authentication/ui/screens/auth/login/widgets/social_signin.dart';
 import 'package:authentication/ui/screens/auth/register/register.dart';
@@ -5,6 +7,7 @@ import 'package:authentication/ui/screens/home/home.dart';
 import 'package:authentication/ui/screens/widgets/custom_button.dart';
 import 'package:authentication/ui/screens/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -77,23 +80,20 @@ class LoginScreen extends StatelessWidget {
                     icon: Icons.lock_outline_sharp,
                   ),
                   SizedBox(height: 30),
-                  CustomButton(
-                    callback: () async {
-                      final bool response = await AuthRepository().signInWithEmailAndPassword(
-                        emailController.text,
-                        passwordController.text,
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final loading = ref.watch(AuthLoadingController.provider);
+                      return CustomButton(
+                        isLoading: loading,
+                        callback: () {
+                          ref.read(AuthController.provider.notifier).signInViaEmailAndPassword(
+                                emailController.text,
+                                passwordController.text,
+                              );
+                        },
+                        title: 'Log In',
                       );
-                      if (response == true) {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          HomeScreen.route,
-                          (route) => false,
-                        );
-                        return;
-                      } else {
-                        return;
-                      }
                     },
-                    title: 'Log In',
                   ),
                   SizedBox(height: 20),
                   Center(
